@@ -1,11 +1,16 @@
 package no.lagalt.lagaltapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private long userId;
 
     @Column(name = "username")
     private String userName;
@@ -39,6 +44,15 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<UsersProjects> usersProjects;
+
+    @JsonGetter("usersProjects")
+    public List<String> usersProjectsGetter() {
+        if (usersProjects != null) {
+            return usersProjects.stream().map(usersProjects -> BASE_URI_V1 + "projects/" + usersProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
 
     @OneToMany
     @JoinColumn(name = "user_id")

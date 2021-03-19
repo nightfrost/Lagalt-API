@@ -14,7 +14,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
-    private Long projectId;
+    private long projectId;
 
     @Column(name = "project_title")
     private String projectTitle;
@@ -47,7 +47,7 @@ public class Project {
     private Set<String> projectSkills;
 
     @ElementCollection
-    @CollectionTable(name="tags", joinColumns=@JoinColumn(name="project_id"))
+    @CollectionTable(name="project_tags", joinColumns=@JoinColumn(name="project_id"))
     @Column(name = "project_tags")
     private Set<String> projectTags;
 
