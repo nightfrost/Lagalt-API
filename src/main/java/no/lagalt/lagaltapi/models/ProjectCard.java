@@ -10,7 +10,7 @@ public class ProjectCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_card_id")
-    private long projectCardId;
+    private Long projectCardId;
 
     @Column(name = "project_card_title")
     private String projectCardTitle;

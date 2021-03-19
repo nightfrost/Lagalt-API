@@ -10,7 +10,7 @@ public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcement_id")
-    private long announcementId;
+    private Long announcementId;
 
     @Column(name = "announcement_title")
     private String announcementTitle;

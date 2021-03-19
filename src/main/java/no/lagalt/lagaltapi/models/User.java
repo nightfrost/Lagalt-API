@@ -1,7 +1,8 @@
 package no.lagalt.lagaltapi.models;
 
+import no.lagalt.lagaltapi.models.usersprojects.UsersProjects;
+
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private long userId;
+    private Long userId;
 
     @Column(name = "username")
     private String userName;
@@ -33,15 +34,9 @@ public class User {
     @Column(name = "user_visibility")
     private boolean userVisibility;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_project",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> projects;
-
-    // TODO add columns in the linking table
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<UsersProjects> usersProjects;
 
     @ManyToMany
     @JoinTable(
