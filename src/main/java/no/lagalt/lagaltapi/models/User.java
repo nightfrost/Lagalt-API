@@ -48,28 +48,6 @@ public class User {
     @JoinColumn(name = "user_id")
     private Set<ViewedProjects> viewedProjects;
 
-/*
-    @ManyToMany
-    @JoinTable(
-            name = "clicked_projects",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> clickedProjects;
-
-    // TODO add columns in the linking table
-
-    @ManyToMany
-    @JoinTable(
-            name = "viewed_projects",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> viewedProjects;
-
-    // TODO add columns in the linking table
-*/
-
     public User() {
     }
 
