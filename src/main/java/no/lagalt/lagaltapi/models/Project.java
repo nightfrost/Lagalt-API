@@ -1,6 +1,8 @@
 package no.lagalt.lagaltapi.models;
 
-import no.lagalt.lagaltapi.models.usersprojects.UsersProjects;
+import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
+import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
+import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -61,6 +63,15 @@ public class Project {
     @JoinColumn(name = "user_id")
     private Set<UsersProjects> usersProjects;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<ClickedProjects> clickedProjects;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<ViewedProjects> viewedProjects;
+
+/*
     @ManyToMany
     @JoinTable(
             name = "clicked_projects",
@@ -80,6 +91,7 @@ public class Project {
     private Set<User> usersViewed;
 
     // TODO add columns in the linking table
+*/
 
     public Project() {
     }

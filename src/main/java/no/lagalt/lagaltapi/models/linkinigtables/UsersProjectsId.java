@@ -1,4 +1,4 @@
-package no.lagalt.lagaltapi.models.usersprojects;
+package no.lagalt.lagaltapi.models.linkinigtables;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -56,4 +56,5 @@ public class UsersProjectsId implements Serializable {
             return false;
         UsersProjectsId other = (UsersProjectsId) obj;
         return Objects.equals(getUserId(), other.getUserId()) && Objects.equals(getProjectId(), other.getProjectId());
-    }}
+    }
+}

@@ -1,4 +1,4 @@
-package no.lagalt.lagaltapi.models.usersprojects;
+package no.lagalt.lagaltapi.models.linkinigtables;
 
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.User;
