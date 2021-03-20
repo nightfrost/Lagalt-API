@@ -65,10 +65,18 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String userEmail) {
+    public User(String userName, String userEmail, Set<String> userSkills, String userPortfolio,
+                String userDescription, boolean userVisibility, Set<UsersProjects> usersProjects,
+                Set<ClickedProjects> clickedProjects, Set<ViewedProjects> viewedProjects) {
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userVisibility = false;
+        this.userSkills = userSkills;
+        this.userPortfolio = userPortfolio;
+        this.userDescription = userDescription;
+        this.userVisibility = userVisibility;
+        this.usersProjects = usersProjects;
+        this.clickedProjects = clickedProjects;
+        this.viewedProjects = viewedProjects;
     }
 
     public long getUserId() {
