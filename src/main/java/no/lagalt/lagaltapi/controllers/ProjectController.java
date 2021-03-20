@@ -1,14 +1,11 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.Project;
-import no.lagalt.lagaltapi.models.User;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 

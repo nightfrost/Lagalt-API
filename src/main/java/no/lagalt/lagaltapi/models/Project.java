@@ -1,5 +1,7 @@
 package no.lagalt.lagaltapi.models;
 
+import no.lagalt.lagaltapi.models.enums.ProjectProgress;
+import no.lagalt.lagaltapi.models.enums.ProjectType;
 import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
