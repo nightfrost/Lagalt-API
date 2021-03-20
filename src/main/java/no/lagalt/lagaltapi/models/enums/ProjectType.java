@@ -1,4 +1,4 @@
-package no.lagalt.lagaltapi.models;
+package no.lagalt.lagaltapi.models.enums;
 
 public enum ProjectType {
     MUSIC,
