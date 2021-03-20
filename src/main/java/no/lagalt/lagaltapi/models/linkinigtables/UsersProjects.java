@@ -2,6 +2,7 @@ package no.lagalt.lagaltapi.models.linkinigtables;
 
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.User;
+import no.lagalt.lagaltapi.models.enums.ApprovalStatus;
 
 import javax.persistence.*;
 
@@ -21,7 +22,7 @@ public class UsersProjects {
     private Project project;
 
     @Column(name = "is_approved")
-    private boolean isApproved = false;
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
     @Column(name = "motivation")
     private String motivation;
@@ -65,12 +66,12 @@ public class UsersProjects {
         return this;
     }
 
-    public boolean isApproved() {
-        return isApproved;
+    public ApprovalStatus getApprovalStatus() {
+        return approvalStatus;
     }
 
-    public UsersProjects setApproved(boolean approved) {
-        isApproved = approved;
+    public UsersProjects setApprovalStatus(ApprovalStatus approvalStatus) {
+        this.approvalStatus = approvalStatus;
         return this;
     }
 
