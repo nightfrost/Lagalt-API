@@ -23,6 +23,9 @@ public class UsersProjectsController {
     @Autowired
     private UserRepository userRepository;
 
+    // TODO
+    // get projects for a user by user ID
+/*  // Copied from UserController
     @GetMapping("/{id}")
     public ResponseEntity<UsersProjects> getUserById(@PathVariable long id) {
         User returnUser = new User();
@@ -35,6 +38,7 @@ public class UsersProjectsController {
         }
         return new ResponseEntity<>(returnUser, status);
     }
+*/
 
     @PostMapping
     public ResponseEntity<UsersProjects> addUsersProjects(@RequestBody UsersProjects newUsersProjects) {
