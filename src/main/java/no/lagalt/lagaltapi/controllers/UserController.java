@@ -30,6 +30,22 @@ public class UserController {
         return new ResponseEntity<>(returnUser, status);
     }
 
+/*
+    // get user projects by user ID
+    @GetMapping("/{userId}/projects")
+    public ResponseEntity<Set<Project>> getUserProjectsByUserId(@PathVariable long userId) {
+        Set<Project> userProjects = new HashSet<>();
+        HttpStatus status;
+        if (userRepository.existsById(userId)) {
+            User user = userRepository.findById(userId).get();
+            userProjects = user.getUserProjects().stream().map(projects -> projects.getProject()).collect(Collectors.toSet());
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(userProjects, status);
+    }
+*/
 
     // add new user
     @PostMapping

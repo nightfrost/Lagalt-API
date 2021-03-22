@@ -42,31 +42,49 @@ public class User {
     private boolean userVisibility;
 
     @OneToMany
-    @JoinColumn(name = "user_id")
-    private Set<UsersProjects> usersProjects;
+    @JoinColumn(name = "user_user_id")
+    private Set<UsersProjects> userProjects;
 
-    @JsonGetter("usersProjects")
-    public List<String> usersProjectsGetter() {
-        if (usersProjects != null) {
-            return usersProjects.stream().map(usersProjects -> BASE_URI_V1 + "projects/" + usersProjects.getProject().getProjectId()).collect(Collectors.toList());
+    @JsonGetter("userProjects")
+    public List<String> userProjectsGetter() {
+        if (userProjects != null) {
+            return userProjects.stream().map(usersProjects -> BASE_URI_V1 + "projects/" + usersProjects.getProject().getProjectId()).collect(Collectors.toList());
         } else {
             return null;
         }
     }
 
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_user_id")
     private Set<ClickedProjects> clickedProjects;
 
+    @JsonGetter("clickedProjects")
+    public List<String> clickedProjectsGetter() {
+        if (clickedProjects != null) {
+            return clickedProjects.stream().map(clickedProjects -> BASE_URI_V1 + "projects/" + clickedProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
+
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_user_id")
     private Set<ViewedProjects> viewedProjects;
+
+    @JsonGetter("viewedProjects")
+    public List<String> viewedProjectsGetter() {
+        if (viewedProjects != null) {
+            return viewedProjects.stream().map(viewedProjects -> BASE_URI_V1 + "projects/" + viewedProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
 
     public User() {
     }
 
     public User(String userName, String userEmail, Set<String> userSkills, String userPortfolio,
-                String userDescription, boolean userVisibility, Set<UsersProjects> usersProjects,
+                String userDescription, boolean userVisibility, Set<UsersProjects> userProjects,
                 Set<ClickedProjects> clickedProjects, Set<ViewedProjects> viewedProjects) {
         this.userName = userName;
         this.userEmail = userEmail;
@@ -74,7 +92,7 @@ public class User {
         this.userPortfolio = userPortfolio;
         this.userDescription = userDescription;
         this.userVisibility = userVisibility;
-        this.usersProjects = usersProjects;
+        this.userProjects = userProjects;
         this.clickedProjects = clickedProjects;
         this.viewedProjects = viewedProjects;
     }
@@ -139,6 +157,33 @@ public class User {
 
     public User setUserVisibility(boolean userVisibility) {
         this.userVisibility = userVisibility;
+        return this;
+    }
+
+    public Set<UsersProjects> getUserProjects() {
+        return userProjects;
+    }
+
+    public User setUserProjects(Set<UsersProjects> userProjects) {
+        this.userProjects = userProjects;
+        return this;
+    }
+
+    public Set<ClickedProjects> getClickedProjects() {
+        return clickedProjects;
+    }
+
+    public User setClickedProjects(Set<ClickedProjects> clickedProjects) {
+        this.clickedProjects = clickedProjects;
+        return this;
+    }
+
+    public Set<ViewedProjects> getViewedProjects() {
+        return viewedProjects;
+    }
+
+    public User setViewedProjects(Set<ViewedProjects> viewedProjects) {
+        this.viewedProjects = viewedProjects;
         return this;
     }
 }
