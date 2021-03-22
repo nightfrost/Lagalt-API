@@ -21,6 +21,7 @@ public class UsersProjects {
     @MapsId("projectId")
     private Project project;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "is_approved")
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
