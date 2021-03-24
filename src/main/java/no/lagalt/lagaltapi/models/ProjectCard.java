@@ -25,6 +25,9 @@ public class ProjectCard {
     @Column(name = "project_card_created_at")
     private Timestamp projectCardCreatedAt;
 
+    @Column(name = "project_card_updated_at")
+    private Timestamp projectCardUpdatedAt;
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -46,6 +49,7 @@ public class ProjectCard {
         this.projectCardTitle = projectCardTitle;
         this.projectCardText = projectCardText;
         this.projectCardCreatedAt = projectCardCreatedAt;
+        this.projectCardUpdatedAt = null;
         this.project = project;
     }
 
@@ -82,6 +86,15 @@ public class ProjectCard {
 
     public ProjectCard setProjectCardCreatedAt(Timestamp projectCardCreatedAt) {
         this.projectCardCreatedAt = projectCardCreatedAt;
+        return this;
+    }
+
+    public Timestamp getProjectCardUpdatedAt() {
+        return projectCardUpdatedAt;
+    }
+
+    public ProjectCard setProjectCardUpdatedAt(Timestamp projectCardUpdatedAt) {
+        this.projectCardUpdatedAt = projectCardUpdatedAt;
         return this;
     }
 

@@ -1,9 +1,8 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.User;
-import no.lagalt.lagaltapi.repositories.UserRepository;
+import no.lagalt.lagaltapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,24 +13,16 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     // get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) {
-        User returnUser = new User();
-        HttpStatus status;
-        if (userRepository.existsById(id)) {
-            returnUser = userRepository.findById(id).get();
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.NOT_FOUND;
-        }
-        return new ResponseEntity<>(returnUser, status);
+        return userService.getUserById(id);
     }
 
 /*
-    // get user projects by user ID
+    // get all user projects by user ID
     @GetMapping("/{userId}/projects")
     public ResponseEntity<Set<Project>> getUserProjectsByUserId(@PathVariable long userId) {
         Set<Project> userProjects = new HashSet<>();
@@ -47,11 +38,21 @@ public class UserController {
     }
 */
 
-    // add new user
+    // create new user
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody User newUser) {
-        User user = userRepository.save(newUser);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(user, status);
+        return userService.addUser(newUser);
+    }
+
+    // update user by ID
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUserById(@PathVariable long id, @RequestBody User newUser) {
+        return userService.updateUserById(id, newUser);
+    }
+
+    // delete user by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUserById(@PathVariable long id) {
+        return userService.deleteUserById(id);
     }
 }

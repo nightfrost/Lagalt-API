@@ -1,10 +1,13 @@
 package no.lagalt.lagaltapi.models.linkinigtables;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.User;
 import no.lagalt.lagaltapi.models.enums.ApprovalStatus;
 
 import javax.persistence.*;
+
+import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
 @Entity
 public class UsersProjects {
@@ -17,9 +20,27 @@ public class UsersProjects {
     @MapsId("userId")
     private User user;
 
+    @JsonGetter("user")
+    public String userGetter() {
+        if (user != null) {
+            return BASE_URI_V1 + "users/" + user.getUserId();
+        } else {
+            return null;
+        }
+    }
+
     @ManyToOne
     @MapsId("projectId")
     private Project project;
+
+    @JsonGetter("project")
+    public String projectGetter() {
+        if (project != null) {
+            return BASE_URI_V1 + "projects/" + project.getProjectId();
+        } else {
+            return null;
+        }
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "is_approved")

@@ -1,14 +1,11 @@
 package no.lagalt.lagaltapi.controllers;
 
+import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
-import no.lagalt.lagaltapi.repositories.UsersProjectsRepository;
+import no.lagalt.lagaltapi.services.UsersProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
@@ -17,12 +14,23 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 public class UserProjectsController {
 
     @Autowired
-    private UsersProjectsRepository usersProjectsRepository;
+    private UsersProjectsService usersProjectsProjectService;
 
+    // get users projects by user ID and project ID
+    @GetMapping("/{userId}/{projectId}")
+    public ResponseEntity<UsersProjects> getUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId) {
+        return usersProjectsProjectService.getUsersProjectsByUserIdAndProjectId(userId, projectId);
+    }
+
+    // create user projects
     @PostMapping
     public ResponseEntity<UsersProjects> addUserProject(@RequestBody UsersProjects newUsersProjects) {
-        UsersProjects usersProjects = usersProjectsRepository.save(newUsersProjects);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(usersProjects, status);
+        return usersProjectsProjectService.addUserProject(newUsersProjects);
+    }
+
+    // update users projects by user ID and project ID
+    @PutMapping("/{userId}/{projectId}")
+    public ResponseEntity<UsersProjects> updateUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId, @RequestBody UsersProjects newUsersProjects) {
+        return usersProjectsProjectService.updateUsersProjectsByUserIdAndProjectId(userId, projectId, newUsersProjects);
     }
 }
