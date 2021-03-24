@@ -24,7 +24,7 @@ public class User {
     @Column(name = "username")
     private String userName;
 
-    @Column(name = "user_email")
+    @Column(name = "user_email", unique = true)
     private String userEmail;
 
     @ElementCollection

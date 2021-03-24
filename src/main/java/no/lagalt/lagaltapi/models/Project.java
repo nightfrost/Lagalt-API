@@ -23,7 +23,7 @@ public class Project {
     @Column(name = "project_id")
     private long projectId;
 
-    @Column(name = "project_title")
+    @Column(name = "project_title", unique = true)
     private String projectTitle;
 
     @Enumerated(EnumType.STRING)
@@ -85,7 +85,7 @@ public class Project {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_user_id")
+    @JoinColumn(name = "project_project_id")
     private Set<UsersProjects> projectUsers;
 
     @JsonGetter("projectUsers")
@@ -98,7 +98,7 @@ public class Project {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_user_id")
+    @JoinColumn(name = "project_project_id")
     private Set<ClickedProjects> usersWhoClickedProject;
 
     @JsonGetter("usersWhoClickedProject")
@@ -111,7 +111,7 @@ public class Project {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_user_id")
+    @JoinColumn(name = "project_project_id")
     private Set<ViewedProjects> usersWhoViewedProject;
 
     @JsonGetter("usersWhoViewedProject")

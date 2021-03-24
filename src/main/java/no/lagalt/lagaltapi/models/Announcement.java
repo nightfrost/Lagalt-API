@@ -1,12 +1,9 @@
 package no.lagalt.lagaltapi.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
@@ -25,9 +22,11 @@ public class Announcement {
     @Column(name = "announcement_text")
     private String announcementText;
 
-    @Column(name = "announcement_at")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="Europe/Copenhagen")
+    @Column(name = "announcement_created_at")
     private Timestamp announcementCreatedAt;
+
+    @Column(name = "announcement_updated_at")
+    private Timestamp announcementUpdatedAt;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
@@ -45,11 +44,11 @@ public class Announcement {
     public Announcement() {
     }
 
-    public Announcement(String announcementTitle, String announcementText, Timestamp announcementCreatedAt,
-                        Project project) {
+    public Announcement(String announcementTitle, String announcementText, Timestamp announcementCreatedAt, Project project) {
         this.announcementTitle = announcementTitle;
         this.announcementText = announcementText;
         this.announcementCreatedAt = announcementCreatedAt;
+        this.announcementUpdatedAt = null;
         this.project = project;
     }
 
@@ -86,6 +85,15 @@ public class Announcement {
 
     public Announcement setAnnouncementCreatedAt(Timestamp announcementCreatedAt) {
         this.announcementCreatedAt = announcementCreatedAt;
+        return this;
+    }
+
+    public Timestamp getAnnouncementUpdatedAt() {
+        return announcementUpdatedAt;
+    }
+
+    public Announcement setAnnouncementUpdatedAt(Timestamp announcementUpdatedAt) {
+        this.announcementUpdatedAt = announcementUpdatedAt;
         return this;
     }
 

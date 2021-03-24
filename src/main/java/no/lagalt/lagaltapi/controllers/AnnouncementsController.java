@@ -1,19 +1,10 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.Announcement;
-import no.lagalt.lagaltapi.models.Project;
-import no.lagalt.lagaltapi.models.User;
-import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
-import no.lagalt.lagaltapi.repositories.AnnouncementRepository;
-import no.lagalt.lagaltapi.repositories.ProjectRepository;
+import no.lagalt.lagaltapi.services.AnnouncementsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
@@ -22,25 +13,29 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 public class AnnouncementsController {
 
     @Autowired
-    private AnnouncementRepository announcementRepository;
+    private AnnouncementsService announcementsService;
 
+    // get announcement by ID
     @GetMapping("/{id}")
     public ResponseEntity<Announcement> getAnnouncementById(@PathVariable long id) {
-        Announcement returnAnnoucement = new Announcement();
-        HttpStatus status;
-        if (announcementRepository.existsById(id)) {
-            returnAnnoucement = announcementRepository.findById(id).get();
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.NOT_FOUND;
-        }
-        return new ResponseEntity<>(returnAnnoucement, status);
+        return announcementsService.getAnnouncementById(id);
     }
 
+    // create announcement
     @PostMapping
     public ResponseEntity<Announcement> addAnnouncementToProject(@RequestBody Announcement newAnnouncement) {
-        Announcement announcement = announcementRepository.save(newAnnouncement);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(announcement, status);
+        return announcementsService.addAnnouncementToProject(newAnnouncement);
+    }
+
+    // update announcement by ID
+    @PutMapping("/{id}")
+    public ResponseEntity<Announcement> updateAnnouncementById(@PathVariable long id, @RequestBody Announcement newAnnouncement) {
+        return announcementsService.updateAnnouncementById(id, newAnnouncement);
+    }
+
+    // delete announcement by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Announcement> deleteAnnouncementById(@PathVariable long id) {
+        return announcementsService.deleteAnnouncementById(id);
     }
 }

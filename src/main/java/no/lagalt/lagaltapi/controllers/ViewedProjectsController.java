@@ -1,10 +1,8 @@
 package no.lagalt.lagaltapi.controllers;
 
-import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
-import no.lagalt.lagaltapi.repositories.ViewedProjectsRepository;
+import no.lagalt.lagaltapi.services.ViewedProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +16,11 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 public class ViewedProjectsController {
 
     @Autowired
-    private ViewedProjectsRepository viewedProjectsRepository;
+    private ViewedProjectService viewedProjectService;
 
+    // create viewed project
     @PostMapping
     public ResponseEntity<ViewedProjects> addViewedProject(@RequestBody ViewedProjects newViewedProject) {
-        ViewedProjects viewedProject = viewedProjectsRepository.save(newViewedProject);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(viewedProject, status);
+        return viewedProjectService.addViewedProject(newViewedProject);
     }
 }
