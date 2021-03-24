@@ -46,6 +46,9 @@ public class UsersProjects {
     @Column(name = "is_approved")
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
+    @Column(name = "has_contributed")
+    private boolean hasContributed = false;
+
     @Column(name = "motivation")
     private String motivation;
 
@@ -94,6 +97,15 @@ public class UsersProjects {
 
     public UsersProjects setApprovalStatus(ApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
+        return this;
+    }
+
+    public boolean isHasContributed() {
+        return hasContributed;
+    }
+
+    public UsersProjects setHasContributed(boolean hasContributed) {
+        this.hasContributed = hasContributed;
         return this;
     }
 
