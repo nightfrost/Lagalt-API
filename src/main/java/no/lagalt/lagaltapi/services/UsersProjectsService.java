@@ -52,6 +52,9 @@ public class UsersProjectsService {
 
             ApprovalStatus newApprovalStatus = newUsersProjects.getApprovalStatus();
             usersProjects.setApprovalStatus(newApprovalStatus);
+            if (newApprovalStatus == ApprovalStatus.APPROVED) {
+                usersProjects.setHasContributed(true);
+            }
 
             String newMotivation = newUsersProjects.getMotivation();
             usersProjects.setMotivation(newMotivation);
