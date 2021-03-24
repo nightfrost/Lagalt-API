@@ -1,8 +1,16 @@
 package no.lagalt.lagaltapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
+import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
+import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
+
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +24,7 @@ public class User {
     @Column(name = "username")
     private String userName;
 
-    @Column(name = "user_email")
+    @Column(name = "user_email", unique = true)
     private String userEmail;
 
     @ElementCollection
@@ -33,43 +41,60 @@ public class User {
     @Column(name = "user_visibility")
     private boolean userVisibility;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_project",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> projects;
+    @OneToMany
+    @JoinColumn(name = "user_user_id")
+    private Set<UsersProjects> userProjects;
 
-    // TODO add columns in the linking table
+    @JsonGetter("userProjects")
+    public List<String> userProjectsGetter() {
+        if (userProjects != null) {
+            return userProjects.stream().map(usersProjects -> BASE_URI_V1 + "projects/" + usersProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
 
-    @ManyToMany
-    @JoinTable(
-            name = "clicked_projects",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> clickedProjects;
+    @OneToMany
+    @JoinColumn(name = "user_user_id")
+    private Set<ClickedProjects> clickedProjects;
 
-    // TODO add columns in the linking table
+    @JsonGetter("clickedProjects")
+    public List<String> clickedProjectsGetter() {
+        if (clickedProjects != null) {
+            return clickedProjects.stream().map(clickedProjects -> BASE_URI_V1 + "projects/" + clickedProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
 
-    @ManyToMany
-    @JoinTable(
-            name = "viewed_projects",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")}
-    )
-    private Set<Project> viewedProjects;
+    @OneToMany
+    @JoinColumn(name = "user_user_id")
+    private Set<ViewedProjects> viewedProjects;
 
-    // TODO add columns in the linking table
+    @JsonGetter("viewedProjects")
+    public List<String> viewedProjectsGetter() {
+        if (viewedProjects != null) {
+            return viewedProjects.stream().map(viewedProjects -> BASE_URI_V1 + "projects/" + viewedProjects.getProject().getProjectId()).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
 
     public User() {
     }
 
-    public User(String userName, String userEmail) {
+    public User(String userName, String userEmail, Set<String> userSkills, String userPortfolio,
+                String userDescription, boolean userVisibility, Set<UsersProjects> userProjects,
+                Set<ClickedProjects> clickedProjects, Set<ViewedProjects> viewedProjects) {
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userVisibility = false;
+        this.userSkills = userSkills;
+        this.userPortfolio = userPortfolio;
+        this.userDescription = userDescription;
+        this.userVisibility = userVisibility;
+        this.userProjects = userProjects;
+        this.clickedProjects = clickedProjects;
+        this.viewedProjects = viewedProjects;
     }
 
     public long getUserId() {
@@ -132,6 +157,33 @@ public class User {
 
     public User setUserVisibility(boolean userVisibility) {
         this.userVisibility = userVisibility;
+        return this;
+    }
+
+    public Set<UsersProjects> getUserProjects() {
+        return userProjects;
+    }
+
+    public User setUserProjects(Set<UsersProjects> userProjects) {
+        this.userProjects = userProjects;
+        return this;
+    }
+
+    public Set<ClickedProjects> getClickedProjects() {
+        return clickedProjects;
+    }
+
+    public User setClickedProjects(Set<ClickedProjects> clickedProjects) {
+        this.clickedProjects = clickedProjects;
+        return this;
+    }
+
+    public Set<ViewedProjects> getViewedProjects() {
+        return viewedProjects;
+    }
+
+    public User setViewedProjects(Set<ViewedProjects> viewedProjects) {
+        this.viewedProjects = viewedProjects;
         return this;
     }
 }
