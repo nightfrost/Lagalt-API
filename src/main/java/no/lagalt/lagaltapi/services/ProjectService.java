@@ -1,9 +1,12 @@
 package no.lagalt.lagaltapi.services;
 
 import no.lagalt.lagaltapi.models.Project;
+import no.lagalt.lagaltapi.models.enums.ApprovalStatus;
 import no.lagalt.lagaltapi.models.enums.ProjectProgress;
 import no.lagalt.lagaltapi.models.enums.ProjectType;
+import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
+import no.lagalt.lagaltapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,12 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UsersProjectsService usersProjectsService;
+
     public ResponseEntity<Project> getProjectById(long projectId) {
         Project returnProject = null;
         HttpStatus status;
@@ -29,8 +38,13 @@ public class ProjectService {
         return new ResponseEntity<>(returnProject, status);
     }
 
-    public ResponseEntity<Project> addProject(Project newProject) {
+    public ResponseEntity<Project> addProject(Project newProject, Long userId) {
+        UsersProjects newUsersProjects = new UsersProjects(userRepository.findById(userId).get(), newProject, "Project Owner");
+        newUsersProjects.setAdmin(true);
+        newUsersProjects.setHasContributed(true);
+        newUsersProjects.setApprovalStatus(ApprovalStatus.APPROVED);
         Project project = projectRepository.save(newProject);
+        usersProjectsService.addUserProject(newUsersProjects);
         HttpStatus status = HttpStatus.CREATED;
         return new ResponseEntity<>(project, status);
     }
@@ -71,20 +85,38 @@ public class ProjectService {
             status = HttpStatus.OK;
             return new ResponseEntity<>(project, status);
         } else {
-            addProject(newProject);
-            status = HttpStatus.CREATED;
-            return new ResponseEntity<>(newProject, status);
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
+        }
+    }
+
+    public ResponseEntity<Project> reactivateProjectById(long id) {
+        HttpStatus status;
+        if (projectRepository.existsById(id)) {
+            Project project = projectRepository.findById(id).get();
+
+            project.setActive(true);
+
+            projectRepository.save(project);
+            status = HttpStatus.OK;
+            return new ResponseEntity<>(project, status);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
         }
     }
 
     public ResponseEntity<Project> deleteProjectById(long id) {
         HttpStatus status;
         if (projectRepository.existsById(id)) {
-            projectRepository.deleteById(id);
-            status = HttpStatus.NO_CONTENT;
+            Project project = projectRepository.findById(id).get();
+            project.setActive(false);
+            projectRepository.save(project);
+            status = HttpStatus.OK;
+            return new ResponseEntity<>(project, status);
         } else {
             status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
         }
-        return new ResponseEntity<>(null, status);
     }
 }

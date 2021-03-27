@@ -38,7 +38,7 @@ public class Project {
     private ProjectType projectType;
 
     @ElementCollection
-    @CollectionTable(name="photos", joinColumns=@JoinColumn(name="project_id"))
+    @CollectionTable(name="project_photos", joinColumns=@JoinColumn(name="project_id"))
     @Column(name = "project_photos")
     private Set<String> projectPhotos;
 
@@ -122,6 +122,9 @@ public class Project {
             return null;
         }
     }
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
 
     public Project() {
     }
@@ -267,6 +270,15 @@ public class Project {
 
     public Project setUsersWhoViewedProject(Set<ViewedProjects> usersWhoViewedProject) {
         this.usersWhoViewedProject = usersWhoViewedProject;
+        return this;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public Project setActive(boolean active) {
+        isActive = active;
         return this;
     }
 }
