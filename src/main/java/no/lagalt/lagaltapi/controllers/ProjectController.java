@@ -51,15 +51,21 @@ public class ProjectController {
     }
 
     // create project
-    @PostMapping
-    public ResponseEntity<Project> addProject(@RequestBody Project newProject) {
-        return projectService.addProject(newProject);
+    @PostMapping("/{userId}")
+    public ResponseEntity<Project> addProject(@RequestBody Project newProject, @PathVariable Long userId) {
+        return projectService.addProject(newProject, userId);
     }
 
     // update project by project ID
     @PutMapping("/{projectId}")
     public ResponseEntity<Project> updateProjectById(@PathVariable long projectId, @RequestBody Project newProject) {
         return projectService.updateProjectById(projectId, newProject);
+    }
+
+    // reactivate project by project ID
+    @PutMapping("/reactivate/{projectId}")
+    public ResponseEntity<Project> reactivateProjectById(@PathVariable long projectId) {
+        return projectService.reactivateProjectById(projectId);
     }
 
     // delete project by ID
