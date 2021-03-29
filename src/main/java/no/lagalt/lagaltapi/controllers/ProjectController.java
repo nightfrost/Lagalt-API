@@ -16,6 +16,7 @@ import java.util.Set;
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = BASE_URI_V1 + "/projects")
 public class ProjectController {
 
