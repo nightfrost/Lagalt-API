@@ -9,9 +9,15 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT DISTINCT project_id FROM public.user_skills JOIN public.project_skills ON(user_skills = project_skills) WHERE user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT get_suggestions_from_user_skills(?1)", nativeQuery = true)
     Set<Long> findUserProjectMatchingSkillsByUserId(long userId);
 
     @Query(value = "SELECT get_suggestions_from_contributed_projects(?1)", nativeQuery = true)
     Set<Long> getSuggestionsFromContributedProjects(long userId);
+
+    @Query(value = "SELECT get_suggestions_from_clicked_projects(?1)", nativeQuery = true)
+    Set<Long> getSuggestionsFromClickedProjects(long userId);
+
+    @Query(value = "SELECT get_suggestions_from_viewed_projects(?1)", nativeQuery = true)
+    Set<Long> getSuggestionsFromViewedProjects(long userId);
 }

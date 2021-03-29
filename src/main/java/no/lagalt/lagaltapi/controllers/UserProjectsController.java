@@ -1,6 +1,5 @@
 package no.lagalt.lagaltapi.controllers;
 
-import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.services.UsersProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;

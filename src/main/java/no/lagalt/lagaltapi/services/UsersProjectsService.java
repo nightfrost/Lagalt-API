@@ -1,6 +1,5 @@
 package no.lagalt.lagaltapi.services;
 
-import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.enums.ApprovalStatus;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.repositories.UsersProjectsRepository;
@@ -9,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.sql.Timestamp;
 
 @Service
 public class UsersProjectsService {
