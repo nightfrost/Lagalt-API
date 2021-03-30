@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -48,16 +49,20 @@ public class ProjectService {
         return new ResponseEntity<>(returnProject, status);
     }
 
-    public ResponseEntity<Set<Project>> getAllActiveProjects() {
+    public ResponseEntity<Set<Project>> getAllActiveProjects(String industry, String status, String search) {
         Set<Project> returnProjects = null;
-        HttpStatus status;
+        HttpStatus httpStatus;
         if (projectRepository.existsActiveProjects()) {
-            returnProjects = projectRepository.getAllActiveProjects();
-            status = HttpStatus.OK;
+            returnProjects = projectRepository.getAllActiveProjects(
+                    industry == null ? "" : industry,
+                    status == null ? "" : status,
+                    search == null ? "" : search.toLowerCase()
+            );
+            httpStatus = HttpStatus.OK;
         } else {
-            status = HttpStatus.NOT_FOUND;
+            httpStatus = HttpStatus.NOT_FOUND;
         }
-        return new ResponseEntity<>(returnProjects, status);
+        return new ResponseEntity<>(returnProjects, httpStatus);
     }
 
     public ResponseEntity<Project> addProject(Project newProject, Long userId) {
