@@ -99,6 +99,9 @@ public class ProjectService {
             Set<String> newProjectTags = newProject.getProjectTags();
             project.setProjectTags(newProjectTags);
 
+            boolean newIsActive = newProject.isActive();
+            project.setActive(newIsActive);
+
             projectRepository.save(project);
             status = HttpStatus.OK;
             return new ResponseEntity<>(project, status);
