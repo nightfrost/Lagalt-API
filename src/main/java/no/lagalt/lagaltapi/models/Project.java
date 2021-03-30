@@ -58,6 +58,9 @@ public class Project {
     @Column(name = "project_tags")
     private Set<String> projectTags;
 
+    @Column(name = "is_active")
+    private boolean isActive = true;
+
     @OneToMany
     @JoinColumn(name = "project_id")
     private Set<Announcement> announcements;
@@ -122,9 +125,6 @@ public class Project {
             return null;
         }
     }
-
-    @Column(name = "is_active")
-    private boolean isActive = true;
 
     public Project() {
     }

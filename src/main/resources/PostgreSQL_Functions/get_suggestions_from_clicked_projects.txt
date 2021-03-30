@@ -1,0 +1,51 @@
+WITH
+	ClickedProjects AS (
+		SELECT DISTINCT project_id
+		FROM projects p JOIN clicked_projects c ON p.project_id = c.project_project_id
+		WHERE c.user_user_id = $1
+	),
+	
+	ContributedProjects AS (
+		SELECT DISTINCT project_id
+		FROM projects p JOIN users_projects c ON p.project_id = c.project_project_id
+		WHERE c.user_user_id = $1 AND c.has_contributed = true
+	),
+	
+	ClickedProjectsTypes AS (
+		SELECT project_id
+		FROM projects
+		WHERE projects.project_type IN (SELECT DISTINCT project_type
+										FROM projects p JOIN clicked_projects c ON p.project_id = c.project_project_id
+										WHERE c.user_user_id = $1)
+			AND project_id NOT IN (SELECT * FROM ContributedProjects)
+	), 
+	
+	ClickedProjectsSkills AS (
+		SELECT DISTINCT project_id
+		FROM projects NATURAL JOIN project_skills
+		WHERE project_skills IN (SELECT DISTINCT project_skills
+									FROM projects p
+										JOIN clicked_projects c ON p.project_id = c.project_project_id
+										JOIN project_skills ps ON p.project_id = ps.project_id
+									WHERE c.user_user_id = $1)
+			AND project_id NOT IN (SELECT * FROM ClickedProjects)
+			AND project_id NOT IN (SELECT * FROM ContributedProjects)
+	),
+	
+	ClickedProjectsTags AS (
+		SELECT DISTINCT project_id
+		FROM projects NATURAL JOIN project_tags
+		WHERE project_tags IN (SELECT DISTINCT project_tags
+								FROM projects p
+									JOIN clicked_projects c ON p.project_id = c.project_project_id
+									JOIN project_tags pt ON p.project_id = pt.project_id
+								WHERE c.user_user_id = $1)
+			AND project_id NOT IN (SELECT * FROM ClickedProjects)
+			AND project_id NOT IN (SELECT * FROM ContributedProjects)
+	)
+
+SELECT * FROM ClickedProjectsTypes
+UNION
+SELECT * FROM ClickedProjectsSkills
+UNION
+SELECT * FROM ClickedProjectsTags;

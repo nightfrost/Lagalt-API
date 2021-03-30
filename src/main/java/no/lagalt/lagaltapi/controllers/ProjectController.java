@@ -38,6 +38,12 @@ public class ProjectController {
         return projectService.getProjectById(projectId);
     }
 
+    // get all active projects
+    @GetMapping
+    public ResponseEntity<Set<Project>> getAllActiveProjects() {
+        return projectService.getAllActiveProjects();
+    }
+
     // get all announcements by project ID
     @GetMapping("/{projectId}/announcements")
     public ResponseEntity<Set<Announcement>> getAllAnnouncementsByProjectId(@PathVariable long projectId) {

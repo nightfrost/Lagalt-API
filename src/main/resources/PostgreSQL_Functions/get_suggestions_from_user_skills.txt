@@ -1,0 +1,10 @@
+WITH ContributedProjects AS (
+		SELECT DISTINCT project_id
+		FROM projects p JOIN users_projects c ON p.project_id = c.project_project_id
+		WHERE c.user_user_id = $1 AND c.has_contributed = true
+	)
+
+SELECT DISTINCT project_id
+FROM public.user_skills JOIN public.project_skills ON(user_skills = project_skills)
+WHERE user_id = $1
+	AND project_id NOT IN (SELECT * FROM ContributedProjects);

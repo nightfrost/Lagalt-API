@@ -48,6 +48,18 @@ public class ProjectService {
         return new ResponseEntity<>(returnProject, status);
     }
 
+    public ResponseEntity<Set<Project>> getAllActiveProjects() {
+        Set<Project> returnProjects = null;
+        HttpStatus status;
+        if (projectRepository.existsActiveProjects()) {
+            returnProjects = projectRepository.getAllActiveProjects();
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(returnProjects, status);
+    }
+
     public ResponseEntity<Project> addProject(Project newProject, Long userId) {
         User user = userRepository.findById(userId).get();
         Project project = projectRepository.save(newProject);
@@ -98,6 +110,9 @@ public class ProjectService {
 
             Set<String> newProjectTags = newProject.getProjectTags();
             project.setProjectTags(newProjectTags);
+
+            boolean newIsActive = newProject.isActive();
+            project.setActive(newIsActive);
 
             projectRepository.save(project);
             status = HttpStatus.OK;
