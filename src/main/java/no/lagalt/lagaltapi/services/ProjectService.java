@@ -111,9 +111,6 @@ public class ProjectService {
             Set<String> newProjectTags = newProject.getProjectTags();
             project.setProjectTags(newProjectTags);
 
-            boolean newIsActive = newProject.isActive();
-            project.setActive(newIsActive);
-
             projectRepository.save(project);
             status = HttpStatus.OK;
             return new ResponseEntity<>(project, status);
@@ -123,12 +120,13 @@ public class ProjectService {
         }
     }
 
-    public ResponseEntity<Project> reactivateProjectById(long id) {
+    public ResponseEntity<Project> toggleIsActiveByProjectId(long id) {
         HttpStatus status;
         if (projectRepository.existsById(id)) {
             Project project = projectRepository.findById(id).get();
 
-            project.setActive(true);
+            boolean isActive = project.isActive();
+            project.setActive(!isActive);
 
             projectRepository.save(project);
             status = HttpStatus.OK;

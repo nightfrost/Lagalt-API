@@ -69,9 +69,9 @@ public class ProjectController {
     }
 
     // reactivate project by project ID
-    @PutMapping("/reactivate/{projectId}")
-    public ResponseEntity<Project> reactivateProjectById(@PathVariable long projectId) {
-        return projectService.reactivateProjectById(projectId);
+    @PutMapping("/toggle-active-status/{projectId}")
+    public ResponseEntity<Project> toggleIsActiveByProjectId(@PathVariable long projectId) {
+        return projectService.toggleIsActiveByProjectId(projectId);
     }
 
     // delete project by ID
