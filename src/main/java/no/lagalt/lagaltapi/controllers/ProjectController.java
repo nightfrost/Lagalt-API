@@ -3,6 +3,8 @@ package no.lagalt.lagaltapi.controllers;
 import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.ProjectCard;
+import no.lagalt.lagaltapi.models.enums.ProjectProgress;
+import no.lagalt.lagaltapi.models.enums.ProjectType;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.services.AnnouncementsService;
 import no.lagalt.lagaltapi.services.ProjectCardsService;
@@ -40,8 +42,11 @@ public class ProjectController {
 
     // get all active projects
     @GetMapping
-    public ResponseEntity<Set<Project>> getAllActiveProjects() {
-        return projectService.getAllActiveProjects();
+    public ResponseEntity<Set<Project>> getAllActiveProjects(
+            @RequestParam(required = false) String industry,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String search) {
+        return projectService.getAllActiveProjects(industry, status, search);
     }
 
     // get all announcements by project ID
@@ -69,9 +74,9 @@ public class ProjectController {
     }
 
     // reactivate project by project ID
-    @PutMapping("/reactivate/{projectId}")
-    public ResponseEntity<Project> reactivateProjectById(@PathVariable long projectId) {
-        return projectService.reactivateProjectById(projectId);
+    @PutMapping("/toggle-active-status/{projectId}")
+    public ResponseEntity<Project> toggleIsActiveByProjectId(@PathVariable long projectId) {
+        return projectService.toggleIsActiveByProjectId(projectId);
     }
 
     // delete project by ID

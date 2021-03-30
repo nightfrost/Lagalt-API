@@ -1,0 +1,30 @@
+SELECT *
+FROM projects
+WHERE is_active = true
+	AND CASE
+			WHEN industry <> '' THEN project_type = industry
+			ELSE project_type = ANY (SELECT DISTINCT project_type FROM projects)
+		END
+	AND CASE
+			WHEN status <> '' THEN project_progress = status
+			ELSE project_progress = ANY (SELECT DISTINCT project_progress FROM projects)
+		END
+	AND CASE
+			WHEN search_text IS NOT NULL THEN (
+					LOWER(project_title) LIKE CONCAT ('%', search_text, '%')
+				OR
+					LOWER(project_description) LIKE CONCAT ('%', search_text, '%')
+				OR	
+					LOWER(project_type) LIKE CONCAT ('%', search_text, '%')
+				OR
+					EXISTS (SELECT *
+							FROM (SELECT DISTINCT ps.project_skills
+									FROM projects NATURAL JOIN project_skills ps) as skills
+							WHERE LOWER(skills.project_skills) LIKE CONCAT ('%', search_text, '%'))
+				OR 
+					EXISTS (SELECT *
+							FROM (SELECT DISTINCT ps.project_tags
+									FROM projects NATURAL JOIN project_tags ps) as tags
+							WHERE LOWER(tags.project_tags) LIKE CONCAT ('%', search_text, '%'))
+			)
+		END;
