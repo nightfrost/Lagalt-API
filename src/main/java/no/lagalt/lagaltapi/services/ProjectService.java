@@ -49,14 +49,15 @@ public class ProjectService {
         return new ResponseEntity<>(returnProject, status);
     }
 
-    public ResponseEntity<Set<Project>> getAllActiveProjects(String industry, String status, String search) {
+    public ResponseEntity<Set<Project>> getAllActiveProjects(String industry, String status, String search, short limit) {
         Set<Project> returnProjects = null;
         HttpStatus httpStatus;
         if (projectRepository.existsActiveProjects()) {
             returnProjects = projectRepository.getAllActiveProjects(
                     industry == null ? "" : industry,
                     status == null ? "" : status,
-                    search == null ? "" : search.toLowerCase()
+                    search == null ? "" : search.toLowerCase(),
+                    limit
             );
             httpStatus = HttpStatus.OK;
         } else {

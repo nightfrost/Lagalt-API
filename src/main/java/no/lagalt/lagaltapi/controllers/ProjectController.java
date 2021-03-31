@@ -45,8 +45,9 @@ public class ProjectController {
     public ResponseEntity<Set<Project>> getAllActiveProjects(
             @RequestParam(required = false) String industry,
             @RequestParam(required = false) String status,
-            @RequestParam(required = false) String search) {
-        return projectService.getAllActiveProjects(industry, status, search);
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false, defaultValue = "10") short limit) {
+        return projectService.getAllActiveProjects(industry, status, search, limit);
     }
 
     // get all announcements by project ID
