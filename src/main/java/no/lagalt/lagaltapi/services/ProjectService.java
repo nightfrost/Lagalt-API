@@ -8,13 +8,13 @@ import no.lagalt.lagaltapi.models.enums.ProjectType;
 import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
+import no.lagalt.lagaltapi.models.modelHelpers.ProjectUpdate;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -66,23 +66,31 @@ public class ProjectService {
         return new ResponseEntity<>(returnProjects, httpStatus);
     }
 
-    public ResponseEntity<Project> addProject(Project newProject, Long userId) {
-        User user = userRepository.findById(userId).get();
-        Project project = projectRepository.save(newProject);
+    public ResponseEntity<Project> addProject(ProjectUpdate projectUpdate) {
+        HttpStatus status;
+        if (!projectRepository.existsByProjectTitle(projectUpdate.getProject().getProjectTitle())) {
+            User user = userRepository.findById(projectUpdate.getUserId().getUserId()).get();
+            Project project = projectRepository.save(projectUpdate.getProject());
 
-        UsersProjects newUsersProjects = new UsersProjects(user, newProject, "Project Owner");
-        newUsersProjects.setAdmin(true);
-        newUsersProjects.setHasContributed(true);
-        newUsersProjects.setApprovalStatus(ApprovalStatus.APPROVED);
-        usersProjectsService.addUserProject(newUsersProjects);
+            UsersProjects newUsersProjects = new UsersProjects(user, projectUpdate.getProject(), "Project Owner");
+            newUsersProjects.setAdmin(true);
+            newUsersProjects.setHasContributed(true);
+            newUsersProjects.setApprovalStatus(ApprovalStatus.APPROVED);
+            usersProjectsService.addUserProject(newUsersProjects);
 
-        ClickedProjects newClickedProject = new ClickedProjects(user, newProject, new Timestamp(System.currentTimeMillis()));
-        clickedProjectService.addClickedProject(newClickedProject);
+            ClickedProjects newClickedProject = new ClickedProjects(user, projectUpdate.getProject(), new Timestamp(System.currentTimeMillis()));
+            clickedProjectService.addClickedProject(newClickedProject);
 
-        ViewedProjects newViewedProject = new ViewedProjects(user, newProject, new Timestamp(System.currentTimeMillis()));
-        viewedProjectService.addViewedProject(newViewedProject);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(project, status);
+            ViewedProjects newViewedProject = new ViewedProjects(user, projectUpdate.getProject(), new Timestamp(System.currentTimeMillis()));
+            viewedProjectService.addViewedProject(newViewedProject);
+            status = HttpStatus.CREATED;
+
+            project = projectRepository.findById(project.getProjectId()).get();
+            return new ResponseEntity<>(project, status);
+        } else {
+            status = HttpStatus.CONFLICT;
+            return new ResponseEntity<>(null, status);
+        }
     }
 
     public ResponseEntity<Project> updateProjectById(long id, Project newProject) {

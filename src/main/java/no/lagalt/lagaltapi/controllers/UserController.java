@@ -1,6 +1,8 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.User;
+import no.lagalt.lagaltapi.models.modelHelpers.UserId;
+import no.lagalt.lagaltapi.models.modelHelpers.UserUpdate;
 import no.lagalt.lagaltapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,9 @@ public class UserController {
     private UserService userService;
 
     // get user by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
-        return userService.getUserById(id);
+    @GetMapping
+    public ResponseEntity<User> getUserById(@RequestBody UserId userId) {
+        return userService.getUserById(userId.getUserId());
     }
 
 /*
@@ -46,14 +48,14 @@ public class UserController {
     }
 
     // update user by ID
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUserById(@PathVariable long id, @RequestBody User newUser) {
-        return userService.updateUserById(id, newUser);
+    @PutMapping
+    public ResponseEntity<User> updateUserById(@RequestBody UserUpdate userUpdate) {
+        return userService.updateUserById(userUpdate.getUserId().getUserId(), userUpdate.getUser());
     }
 
     // delete user by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUserById(@PathVariable long id) {
-        return userService.deleteUserById(id);
+    @DeleteMapping
+    public ResponseEntity<User> deleteUserById(@RequestBody UserId userId) {
+        return userService.deleteUserById(userId.getUserId());
     }
 }

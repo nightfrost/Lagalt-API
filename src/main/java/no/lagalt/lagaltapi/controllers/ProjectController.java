@@ -3,8 +3,7 @@ package no.lagalt.lagaltapi.controllers;
 import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.ProjectCard;
-import no.lagalt.lagaltapi.models.enums.ProjectProgress;
-import no.lagalt.lagaltapi.models.enums.ProjectType;
+import no.lagalt.lagaltapi.models.modelHelpers.ProjectUpdate;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.services.AnnouncementsService;
 import no.lagalt.lagaltapi.services.ProjectCardsService;
@@ -63,9 +62,9 @@ public class ProjectController {
     }
 
     // create project
-    @PostMapping("/{userId}")
-    public ResponseEntity<Project> addProject(@RequestBody Project newProject, @PathVariable Long userId) {
-        return projectService.addProject(newProject, userId);
+    @PostMapping
+    public ResponseEntity<Project> addProject(@RequestBody ProjectUpdate projectUpdate) {
+        return projectService.addProject(projectUpdate);
     }
 
     // update project by project ID

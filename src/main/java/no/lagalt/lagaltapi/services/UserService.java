@@ -28,9 +28,15 @@ public class UserService {
     }
 
     public ResponseEntity<User> addUser(User newUser) {
-        User user = userRepository.save(newUser);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(user, status);
+        HttpStatus status;
+        if (!userRepository.existsByUserEmail(newUser.getUserEmail())) {
+            User user = userRepository.save(newUser);
+            status = HttpStatus.CREATED;
+            return new ResponseEntity<>(user, status);
+        } else {
+            status = HttpStatus.CONFLICT;
+            return new ResponseEntity<>(null, status);
+        }
     }
 
     public ResponseEntity<User> updateUserById(long id, User newUser) {
