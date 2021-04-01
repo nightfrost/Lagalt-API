@@ -1,6 +1,7 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
+import no.lagalt.lagaltapi.models.modelHelpers.UserId;
 import no.lagalt.lagaltapi.services.UsersProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class UserProjectsController {
     private UsersProjectsService usersProjectsProjectService;
 
     // get users projects by user ID and project ID
-    @GetMapping("/{userId}/{projectId}")
-    public ResponseEntity<UsersProjects> getUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId) {
-        return usersProjectsProjectService.getUsersProjectsByUserIdAndProjectId(userId, projectId);
+    @GetMapping("/{projectId}")
+    public ResponseEntity<UsersProjects> getUsersProjectsByUserIdAndProjectId(@RequestBody UserId userId, @PathVariable long projectId) {
+        return usersProjectsProjectService.getUsersProjectsByUserIdAndProjectId(userId.getUserId(), projectId);
     }
 
     // create user projects
@@ -29,8 +30,8 @@ public class UserProjectsController {
     }
 
     // update users projects by user ID and project ID
-    @PutMapping("/{userId}/{projectId}")
-    public ResponseEntity<UsersProjects> updateUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId, @RequestBody UsersProjects newUsersProjects) {
-        return usersProjectsProjectService.updateUsersProjectsByUserIdAndProjectId(userId, projectId, newUsersProjects);
+    @PutMapping
+    public ResponseEntity<UsersProjects> updateUsersProjectsByUserIdAndProjectId(@RequestBody UsersProjects newUsersProjects) {
+        return usersProjectsProjectService.updateUsersProjectsByUserIdAndProjectId(newUsersProjects.getId().getUserId(), newUsersProjects.getId().getProjectId(), newUsersProjects);
     }
 }

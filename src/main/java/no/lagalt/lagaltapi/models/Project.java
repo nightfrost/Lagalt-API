@@ -81,7 +81,7 @@ public class Project {
     @JsonGetter("projectCards")
     public List<String> projectCardsGetter() {
         if (projectCards != null) {
-            return projectCards.stream().map(projectCard -> BASE_URI_V1 + "projectCards/" + projectCard.getProjectCardId()).collect(Collectors.toList());
+            return projectCards.stream().map(projectCard -> BASE_URI_V1 + "project-cards/" + projectCard.getProjectCardId()).collect(Collectors.toList());
         } else {
             return null;
         }
