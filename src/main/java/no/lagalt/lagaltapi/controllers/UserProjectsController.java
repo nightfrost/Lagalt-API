@@ -18,9 +18,9 @@ public class UserProjectsController {
     private UsersProjectsService usersProjectsProjectService;
 
     // get users projects by user ID and project ID
-    @GetMapping("/{projectId}")
-    public ResponseEntity<UsersProjects> getUsersProjectsByUserIdAndProjectId(@RequestBody UserId userId, @PathVariable long projectId) {
-        return usersProjectsProjectService.getUsersProjectsByUserIdAndProjectId(userId.getUserId(), projectId);
+    @GetMapping("/{userId}/{projectId}")
+    public ResponseEntity<UsersProjects> getUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId) {
+        return usersProjectsProjectService.getUsersProjectsByUserIdAndProjectId(userId, projectId);
     }
 
     // create user projects
@@ -30,8 +30,8 @@ public class UserProjectsController {
     }
 
     // update users projects by user ID and project ID
-    @PutMapping
-    public ResponseEntity<UsersProjects> updateUsersProjectsByUserIdAndProjectId(@RequestBody UsersProjects newUsersProjects) {
-        return usersProjectsProjectService.updateUsersProjectsByUserIdAndProjectId(newUsersProjects.getId().getUserId(), newUsersProjects.getId().getProjectId(), newUsersProjects);
+    @PutMapping("/{userId}/{projectId}")
+    public ResponseEntity<UsersProjects> updateUsersProjectsByUserIdAndProjectId(@PathVariable long userId, @PathVariable long projectId,@RequestBody UsersProjects newUsersProjects) {
+        return usersProjectsProjectService.updateUsersProjectsByUserIdAndProjectId(userId, projectId, newUsersProjects);
     }
 }

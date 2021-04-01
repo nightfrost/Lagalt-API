@@ -69,9 +69,8 @@ public class AnnouncementsService {
             status = HttpStatus.OK;
             return new ResponseEntity<>(announcement, status);
         } else {
-            addAnnouncementToProject(newAnnouncement);
-            status = HttpStatus.CREATED;
-            return new ResponseEntity<>(newAnnouncement, status);
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
         }
     }
 

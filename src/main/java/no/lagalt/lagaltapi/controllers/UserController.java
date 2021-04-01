@@ -19,9 +19,9 @@ public class UserController {
     private UserService userService;
 
     // get user by ID
-    @GetMapping
-    public ResponseEntity<User> getUserById(@RequestBody UserId userId) {
-        return userService.getUserById(userId.getUserId());
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable long userId) {
+        return userService.getUserById(userId);
     }
 
 /*
@@ -48,14 +48,14 @@ public class UserController {
     }
 
     // update user by ID
-    @PutMapping
-    public ResponseEntity<User> updateUserById(@RequestBody UserUpdate userUpdate) {
-        return userService.updateUserById(userUpdate.getUserId().getUserId(), userUpdate.getUser());
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserById(@PathVariable long userId ,@RequestBody User newUser) {
+        return userService.updateUserById(userId, newUser);
     }
 
     // delete user by ID
-    @DeleteMapping
-    public ResponseEntity<User> deleteUserById(@RequestBody UserId userId) {
-        return userService.deleteUserById(userId.getUserId());
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteUserById(@PathVariable long userId) {
+        return userService.deleteUserById(userId);
     }
 }

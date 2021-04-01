@@ -69,9 +69,8 @@ public class ProjectCardsService {
             status = HttpStatus.OK;
             return new ResponseEntity<>(projectCard, status);
         } else {
-            addProjectCardToProject(newProjectCard);
-            status = HttpStatus.CREATED;
-            return new ResponseEntity<>(newProjectCard, status);
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
         }
     }
 
