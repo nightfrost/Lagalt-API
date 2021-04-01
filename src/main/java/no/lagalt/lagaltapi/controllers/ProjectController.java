@@ -63,8 +63,8 @@ public class ProjectController {
 
     // create project
     @PostMapping
-    public ResponseEntity<Project> addProject(@RequestBody ProjectUpdate projectUpdate) {
-        return projectService.addProject(projectUpdate);
+    public ResponseEntity<Project> addProject(@RequestBody Project newProject) {
+        return projectService.addProject(newProject);
     }
 
     // update project by project ID

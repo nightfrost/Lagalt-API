@@ -23,6 +23,9 @@ public class Project {
     @Column(name = "project_id")
     private long projectId;
 
+    @Column(name = "user_id")
+    private long userId;
+
     @Column(name = "project_title", unique = true)
     private String projectTitle;
 
@@ -129,8 +132,9 @@ public class Project {
     public Project() {
     }
 
-    public Project(String projectTitle, ProjectProgress projectProgress, ProjectType projectType,
+    public Project(String projectTitle, long userId, ProjectProgress projectProgress, ProjectType projectType,
                    Set<String> projectSkills, Set<String> projectTags) {
+        this.userId = userId;
         this.projectTitle = projectTitle;
         this.projectProgress = projectProgress;
         this.projectType = projectType;
@@ -144,6 +148,15 @@ public class Project {
 
     public Project setProjectId(long projectId) {
         this.projectId = projectId;
+        return this;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public Project setUserId(long userId) {
+        this.userId = userId;
         return this;
     }
 

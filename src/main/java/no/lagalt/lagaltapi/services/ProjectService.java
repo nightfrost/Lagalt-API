@@ -66,22 +66,22 @@ public class ProjectService {
         return new ResponseEntity<>(returnProjects, httpStatus);
     }
 
-    public ResponseEntity<Project> addProject(ProjectUpdate projectUpdate) {
+    public ResponseEntity<Project> addProject(Project newProject) {
         HttpStatus status;
-        if (!projectRepository.existsByProjectTitle(projectUpdate.getProject().getProjectTitle())) {
-            User user = userRepository.findById(projectUpdate.getUserId().getUserId()).get();
-            Project project = projectRepository.save(projectUpdate.getProject());
+        if (!projectRepository.existsByProjectTitle(newProject.getProjectTitle())) {
+            User user = userRepository.findById(newProject.getUserId()).get();
+            Project project = projectRepository.save(newProject);
 
-            UsersProjects newUsersProjects = new UsersProjects(user, projectUpdate.getProject(), "Project Owner");
+            UsersProjects newUsersProjects = new UsersProjects(user, newProject, "Project Owner");
             newUsersProjects.setAdmin(true);
             newUsersProjects.setHasContributed(true);
             newUsersProjects.setApprovalStatus(ApprovalStatus.APPROVED);
             usersProjectsService.addUserProject(newUsersProjects);
 
-            ClickedProjects newClickedProject = new ClickedProjects(user, projectUpdate.getProject(), new Timestamp(System.currentTimeMillis()));
+            ClickedProjects newClickedProject = new ClickedProjects(user, newProject, new Timestamp(System.currentTimeMillis()));
             clickedProjectService.addClickedProject(newClickedProject);
 
-            ViewedProjects newViewedProject = new ViewedProjects(user, projectUpdate.getProject(), new Timestamp(System.currentTimeMillis()));
+            ViewedProjects newViewedProject = new ViewedProjects(user, newProject, new Timestamp(System.currentTimeMillis()));
             viewedProjectService.addViewedProject(newViewedProject);
             status = HttpStatus.CREATED;
 
