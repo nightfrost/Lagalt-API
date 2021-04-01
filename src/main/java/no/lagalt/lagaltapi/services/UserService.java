@@ -47,8 +47,15 @@ public class UserService {
             String newUserName = newUser.getUserName();
             user.setUserName(newUserName);
 
-            String newUserEmail = newUser.getUserEmail();
-            user.setUserEmail(newUserEmail);
+            if (!newUser.getUserEmail().equals(user.getUserEmail())) {
+                if(!userRepository.existsByUserEmail(newUser.getUserEmail())) {
+                    String newUserEmail = newUser.getUserEmail();
+                    user.setUserEmail(newUserEmail);
+                } else {
+                    status = HttpStatus.CONFLICT;
+                    return new ResponseEntity<>(null, status);
+                }
+            }
 
             Set<String> newUserSkills = newUser.getUserSkills();
             user.setUserSkills(newUserSkills);
@@ -66,9 +73,8 @@ public class UserService {
             status = HttpStatus.OK;
             return new ResponseEntity<>(user, status);
         } else {
-            addUser(newUser);
-            status = HttpStatus.CREATED;
-            return new ResponseEntity<>(newUser, status);
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
         }
     }
 

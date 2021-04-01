@@ -98,8 +98,15 @@ public class ProjectService {
         if (projectRepository.existsById(id)) {
             Project project = projectRepository.findById(id).get();
 
-            String newProjectTitle = newProject.getProjectTitle();
-            project.setProjectTitle(newProjectTitle);
+            if (!newProject.getProjectTitle().equals(project.getProjectTitle())) {
+                if (!projectRepository.existsByProjectTitle(newProject.getProjectTitle())) {
+                    String newProjectTitle = newProject.getProjectTitle();
+                    project.setProjectTitle(newProjectTitle);
+                } else {
+                    status = HttpStatus.CONFLICT;
+                    return new ResponseEntity<>(null, status);
+                }
+            }
 
             ProjectProgress newProjectProgress = newProject.getProjectProgress();
             project.setProjectProgress(newProjectProgress);
