@@ -1,12 +1,13 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.User;
-import no.lagalt.lagaltapi.models.modelHelpers.UserId;
-import no.lagalt.lagaltapi.models.modelHelpers.UserUpdate;
+import no.lagalt.lagaltapi.models.modelHelpers.UserRelatedProject;
 import no.lagalt.lagaltapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
@@ -24,22 +25,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-/*
-    // get all user projects by user ID
-    @GetMapping("/{userId}/projects")
-    public ResponseEntity<Set<Project>> getUserProjectsByUserId(@PathVariable long userId) {
-        Set<Project> userProjects = new HashSet<>();
-        HttpStatus status;
-        if (userRepository.existsById(userId)) {
-            User user = userRepository.findById(userId).get();
-            userProjects = user.getUserProjects().stream().map(projects -> projects.getProject()).collect(Collectors.toSet());
-            status = HttpStatus.OK;
-        } else {
-            status = HttpStatus.NOT_FOUND;
-        }
-        return new ResponseEntity<>(userProjects, status);
+    // get data on projects related to a user by user ID
+    @GetMapping("/{userId}/related-projects")
+    public ResponseEntity<Set<UserRelatedProject>> getUserRelatedProjectsByUserId(@PathVariable long userId) {
+        return userService.getUserRelatedProjectsByUserId(userId);
     }
-*/
 
     // create new user
     @PostMapping

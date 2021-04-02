@@ -8,7 +8,6 @@ import no.lagalt.lagaltapi.models.enums.ProjectType;
 import no.lagalt.lagaltapi.models.linkinigtables.ClickedProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
 import no.lagalt.lagaltapi.models.linkinigtables.ViewedProjects;
-import no.lagalt.lagaltapi.models.modelHelpers.ProjectUpdate;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

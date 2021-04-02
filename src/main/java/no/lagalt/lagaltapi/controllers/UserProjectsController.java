@@ -1,7 +1,6 @@
 package no.lagalt.lagaltapi.controllers;
 
 import no.lagalt.lagaltapi.models.linkinigtables.UsersProjects;
-import no.lagalt.lagaltapi.models.modelHelpers.UserId;
 import no.lagalt.lagaltapi.services.UsersProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

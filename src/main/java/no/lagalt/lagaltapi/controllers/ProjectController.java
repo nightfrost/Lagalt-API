@@ -3,7 +3,6 @@ package no.lagalt.lagaltapi.controllers;
 import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.ProjectCard;
-import no.lagalt.lagaltapi.models.modelHelpers.ProjectUpdate;
 import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.services.AnnouncementsService;
 import no.lagalt.lagaltapi.services.ProjectCardsService;
