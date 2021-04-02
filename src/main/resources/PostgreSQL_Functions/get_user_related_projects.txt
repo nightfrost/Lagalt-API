@@ -1,3 +1,3 @@
-SELECT user_user_id, is_admin, project_id, project_title, project_type, is_approved, project_progress, is_active
+SELECT user_user_id, is_admin, project_id, project_title, project_type, approval_status, project_progress, is_active
 FROM projects JOIN users_projects ON project_id = project_project_id
 WHERE user_user_id = user_id

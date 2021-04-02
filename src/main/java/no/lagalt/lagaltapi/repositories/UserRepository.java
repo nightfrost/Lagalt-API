@@ -24,6 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT get_suggestions_from_viewed_projects(?1)", nativeQuery = true)
     Set<Long> getSuggestionsFromViewedProjects(long userId);
 
-    @Query(value = "SELECT p.is_admin AS admin, p.project_id AS projectId, p.project_title AS projectTitle, p.project_type AS projectType, p.is_approved AS approvalStatus, p.project_progress AS projectProgress, p.is_active AS projectActive FROM (SELECT * FROM get_user_related_projects(?1)) p", nativeQuery = true)
+    @Query(value = "SELECT p.is_admin AS admin, p.project_id AS projectId, p.project_title AS projectTitle, p.project_type AS projectType, p.approval_status AS approvalStatus, p.project_progress AS projectProgress, p.is_active AS projectActive FROM (SELECT * FROM get_user_related_projects(?1)) p", nativeQuery = true)
     Set<UserRelatedProject> getUserRelatedProjectsByUserId(long userId);
 }
