@@ -1,6 +1,7 @@
 package no.lagalt.lagaltapi.repositories;
 
 import no.lagalt.lagaltapi.models.User;
+import no.lagalt.lagaltapi.models.modelHelpers.UserRelatedProject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT get_suggestions_from_viewed_projects(?1)", nativeQuery = true)
     Set<Long> getSuggestionsFromViewedProjects(long userId);
+
+    @Query(value = "SELECT p.is_admin AS admin, p.project_id AS projectId, p.project_title AS projectTitle, p.project_type AS projectType, p.is_approved AS approvalStatus, p.project_progress AS projectProgress, p.is_active AS projectActive FROM (SELECT * FROM get_user_related_projects(?1)) p", nativeQuery = true)
+    Set<UserRelatedProject> getUserRelatedProjectsByUserId(long userId);
 }

@@ -1,6 +1,7 @@
 package no.lagalt.lagaltapi.services;
 
 import no.lagalt.lagaltapi.models.User;
+import no.lagalt.lagaltapi.models.modelHelpers.UserRelatedProject;
 import no.lagalt.lagaltapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,18 @@ public class UserService {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(returnUser, status);
+    }
+
+    public ResponseEntity<Set<UserRelatedProject>> getUserRelatedProjectsByUserId(long userId) {
+        HttpStatus status;
+        if (userRepository.existsById(userId)) {
+            Set<UserRelatedProject> userRelatedProjects = userRepository.getUserRelatedProjectsByUserId(userId);
+            status = HttpStatus.OK;
+            return new ResponseEntity<>(userRelatedProjects, status);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(null, status);
+        }
     }
 
     public ResponseEntity<User> addUser(User newUser) {

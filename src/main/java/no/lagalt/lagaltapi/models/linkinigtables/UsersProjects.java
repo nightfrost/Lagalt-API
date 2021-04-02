@@ -43,7 +43,7 @@ public class UsersProjects {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "is_approved")
+    @Column(name = "approval_status")
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
     @Column(name = "has_contributed")
