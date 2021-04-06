@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             httpServletResponse.getWriter().write(objectMapper.writeValueAsString(errorObject));
         };
     }
-
+/*
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -65,9 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
+    .cors().configurationSource(corsConfigurationSource()).and()
+*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable().formLogin().disable()
+        http.csrf().disable().formLogin().disable()
                 .httpBasic().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and().authorizeRequests()
                 .antMatchers(restSecProps.getAllowedPublicApis().toArray(String[]::new)).permitAll()
