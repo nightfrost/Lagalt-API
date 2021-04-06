@@ -3,7 +3,6 @@ package no.lagalt.lagaltapi.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.lagalt.lagaltapi.auth.models.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

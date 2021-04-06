@@ -15,6 +15,9 @@ public class CookieProperties {
         this.maxAgeInMinutes = maxAgeInMinutes;
     }
 
+    public CookieProperties() {
+    }
+
     public String getDomain() {
         return domain;
     }

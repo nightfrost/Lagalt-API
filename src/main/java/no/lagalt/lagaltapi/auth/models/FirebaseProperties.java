@@ -15,6 +15,9 @@ public class FirebaseProperties {
         this.enableLogoutEverywhere = enableLogoutEverywhere;
     }
 
+    public FirebaseProperties() {
+    }
+
     public int getSessionExpiryInDays() {
         return sessionExpiryInDays;
     }
