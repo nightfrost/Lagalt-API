@@ -16,7 +16,6 @@ import java.util.Set;
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(value = BASE_URI_V1 + "/projects")
 public class ProjectController {
 
@@ -39,7 +38,7 @@ public class ProjectController {
     }
 
     // get all active projects
-    @GetMapping
+    @GetMapping("/projects")
     public ResponseEntity<Set<Project>> getAllActiveProjects(
             @RequestParam(required = false) String industry,
             @RequestParam(required = false) String status,
