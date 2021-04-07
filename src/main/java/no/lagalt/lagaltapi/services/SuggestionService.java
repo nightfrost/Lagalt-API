@@ -24,13 +24,9 @@ public class SuggestionService {
 
         // Extracting relevant data
         Set<Long> suggestionsFromContributedProjects = userRepository.getSuggestionsFromContributedProjects(userId);
-        System.out.println(suggestionsFromContributedProjects);
         Set<Long> suggestionsFromClickedProjects = userRepository.getSuggestionsFromClickedProjects(userId);
-        System.out.println(suggestionsFromClickedProjects);
         Set<Long> userProjectMatchingSkills = userRepository.findUserProjectMatchingSkillsByUserId(userId);
-        System.out.println(userProjectMatchingSkills);
         Set<Long> suggestionsFromViewedProjects = userRepository.getSuggestionsFromViewedProjects(userId);
-        System.out.println(suggestionsFromViewedProjects);
 
         // Collecting suggestions to return
         if (suggestionsFromContributedProjects.size() > 0 && !suggestionsFromContributedProjects.contains(null)) {
