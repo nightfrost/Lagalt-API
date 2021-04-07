@@ -46,6 +46,14 @@ public class SuggestionService {
             suggestionsFromViewedProjects.forEach(projectId -> suggestedProjects.add(projectRepository.findById(projectId).get()));
         }
 
+        // If there are no matching projects, some other active projects are suggested
+        if (suggestedProjects.size() == 0) {
+            if (projectRepository.existsActiveProjects()) {
+                Set<Project> userUnrelatedActiveProjects = projectRepository.getUserUnrelatedActiveProjects(userId);
+                return new ResponseEntity<>(userUnrelatedActiveProjects, HttpStatus.OK);
+            }
+        }
+
         return new ResponseEntity<>(suggestedProjects, HttpStatus.OK);
     }
 }

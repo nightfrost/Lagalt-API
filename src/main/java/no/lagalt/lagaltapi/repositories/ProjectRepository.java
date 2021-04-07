@@ -16,4 +16,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "SELECT * FROM get_all_active_projects(?1, ?2, ?3, ?4)", nativeQuery = true)
     Set<Project> getAllActiveProjects(String industry, String status, String search, short limit);
+
+    @Query(value = "SELECT * FROM get_user_unrelated_active_projects(?1)", nativeQuery = true)
+    Set<Project> getUserUnrelatedActiveProjects(long userId);
 }
