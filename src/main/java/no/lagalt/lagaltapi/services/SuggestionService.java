@@ -19,15 +19,6 @@ public class SuggestionService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
-    private UsersProjectsRepository usersProjectsRepository;
-
-    @Autowired
-    private ClickedProjectsRepository clickedProjectsRepository;
-
-    @Autowired
-    private ViewedProjectsRepository viewedProjectsRepository;
-
     public ResponseEntity<Set<Project>> getSuggestions(long userId) {
         Set<Project> suggestedProjects = new LinkedHashSet<>();
 
