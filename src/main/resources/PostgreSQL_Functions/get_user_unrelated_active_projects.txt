@@ -1,0 +1,2 @@
+SELECT * FROM get_all_active_projects(''::varchar, ''::varchar, ''::varchar, 10::smallint)
+WHERE project_id NOT IN (SELECT project_id FROM get_user_related_projects(input_user_id));
