@@ -1,7 +1,8 @@
 package no.lagalt.lagaltapi.services;
 
 import no.lagalt.lagaltapi.models.Project;
-import no.lagalt.lagaltapi.repositories.*;
+import no.lagalt.lagaltapi.repositories.ProjectRepository;
+import no.lagalt.lagaltapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
