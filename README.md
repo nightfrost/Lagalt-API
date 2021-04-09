@@ -6,7 +6,7 @@
 
 Spring Boot REST API with PostgreSQL implemented using Hibernate and secured with Firebase.  
 
-It is the back-end part of the [Lagalt](https://lagaltno.herokuapp.com/) application.
+It is the back-end part of the [Lagalt](https://lagaltno.herokuapp.com/) application (GitHub [repo](https://github.com/iamnuno/lagalt)).
 
 ## Group Members
 
