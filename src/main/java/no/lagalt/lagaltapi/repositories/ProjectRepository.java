@@ -14,6 +14,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "SELECT EXISTS(SELECT * FROM projects WHERE is_active = true)", nativeQuery = true)
     boolean existsActiveProjects();
 
+    /*
+    *   `get_all_active_projects` is a database function with `?`s referring to the method parameters (similar to
+    *   prepared statements in JDBC). You can find the corresponding SQL implementation in
+    *   the src/main/resources/assets/postgre.sql.functions folder
+    */
     @Query(value = "SELECT * FROM get_all_active_projects(?1, ?2, ?3, ?4)", nativeQuery = true)
     Set<Project> getAllActiveProjects(String industry, String status, String search, short limit);
 

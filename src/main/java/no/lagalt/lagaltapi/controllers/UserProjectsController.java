@@ -8,6 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 
+/*
+*   UsersProjectsController provides CRUD (except for `delete`) functionality for the custom UsersProjects entity that
+*   contains information about the relation between a specific user and a specific project:
+*       - approval status,
+*       - whether the user at hand has or has not contributed to the project at hand,
+*       - user's motivation, and
+*       - whether the user has the administrator status
+*/
+
 @RestController
 @RequestMapping(value = BASE_URI_V1 + "/users-projects")
 public class UserProjectsController {

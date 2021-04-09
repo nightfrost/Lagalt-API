@@ -28,6 +28,11 @@ public class UserService {
         return new ResponseEntity<>(returnUser, status);
     }
 
+    /*
+    *   `UserRelatedProject` is an interface that Hibernate uses to map the custom query results to a custom POJO
+    *   (cf. UserRelatedProject in src/main/java/no/lagalt/lagaltapi/models/modelHelpers, getUserRelatedProjectsByUserId
+    *   in UserController and getUserRelatedProjectsByUserId in UserRepository)
+    */
     public ResponseEntity<Set<UserRelatedProject>> getUserRelatedProjectsByUserId(long userId) {
         HttpStatus status;
         if (userRepository.existsById(userId)) {
@@ -54,16 +59,20 @@ public class UserService {
 
     public ResponseEntity<User> updateUserById(long id, User newUser) {
         HttpStatus status;
+        // Check if the user exists
         if (userRepository.existsById(id)) {
             User user = userRepository.findById(id).get();
 
             String newUserName = newUser.getUserName();
             user.setUserName(newUserName);
 
+            // Check if the updated email would conflict with existing emails
             if (!newUser.getUserEmail().equals(user.getUserEmail())) {
+                // If no conflict - update
                 if(!userRepository.existsByUserEmail(newUser.getUserEmail())) {
                     String newUserEmail = newUser.getUserEmail();
                     user.setUserEmail(newUserEmail);
+                // Else - report conflict
                 } else {
                     status = HttpStatus.CONFLICT;
                     return new ResponseEntity<>(null, status);

@@ -27,6 +27,10 @@ public class User {
     @Column(name = "user_email", unique = true)
     private String userEmail;
 
+    /*
+     *   Hibernate does not support creating collections in database columns. Therefore, @ElementCollection and
+     *   @CollectionTable annotations are used to create a separate table to implement the collection
+     */
     @ElementCollection
     @CollectionTable(name="user_skills", joinColumns=@JoinColumn(name="user_id"))
     @Column(name="user_skills")

@@ -18,7 +18,7 @@ public class ClickedProjectsController {
     @Autowired
     private ClickedProjectService clickedProjectService;
 
-    // create clicked project
+    // create clicked project - an endpoint that records when a project has been clicked
     @PostMapping
     public ResponseEntity<ClickedProjects> addClickedProject(@RequestBody ClickedProjects newClickedProject) {
         return clickedProjectService.addClickedProject(newClickedProject);

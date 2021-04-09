@@ -24,7 +24,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    // get data on projects related to a user by user ID
+    /*
+    *   Get data on projects related to a user by user ID - custom query function to fetch data on user related projects
+    *   from multiple tables: user role, project title, project type, application status, project progress, project
+    *   status
+     */
     @GetMapping("/{userId}/related-projects")
     public ResponseEntity<Set<UserRelatedProject>> getUserRelatedProjectsByUserId(@PathVariable long userId) {
         return userService.getUserRelatedProjectsByUserId(userId);

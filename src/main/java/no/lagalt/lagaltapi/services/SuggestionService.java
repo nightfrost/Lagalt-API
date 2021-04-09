@@ -29,7 +29,7 @@ public class SuggestionService {
         Set<Long> userProjectMatchingSkills = userRepository.findUserProjectMatchingSkillsByUserId(userId);
         Set<Long> suggestionsFromViewedProjects = userRepository.getSuggestionsFromViewedProjects(userId);
 
-        // Collecting suggestions to return
+        // Collecting suggestions to return - the order of insertion reflects the suggestion priority
         if (suggestionsFromContributedProjects.size() > 0 && !suggestionsFromContributedProjects.contains(null)) {
             suggestionsFromContributedProjects.forEach(projectId -> suggestedProjects.add(projectRepository.findById(projectId).get()));
         }
@@ -46,6 +46,8 @@ public class SuggestionService {
         // If there are no matching projects, some other active projects are suggested
         if (suggestedProjects.size() == 0) {
             if (projectRepository.existsActiveProjects()) {
+                // The custom function is created in view of extendability: if the `0` above was changed to positive,
+                // it would be preferred not to repeat the same suggestions
                 Set<Project> userUnrelatedActiveProjects = projectRepository.getUserUnrelatedActiveProjects(userId);
                 return new ResponseEntity<>(userUnrelatedActiveProjects, HttpStatus.OK);
             }

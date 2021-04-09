@@ -71,6 +71,7 @@ public class ProjectService {
             User user = userRepository.findById(newProject.getUserId()).get();
             Project project = projectRepository.save(newProject);
 
+            // The following is implementing the default configuration on project creation
             UsersProjects newUsersProjects = new UsersProjects(user, newProject, "Project Owner");
             newUsersProjects.setAdmin(true);
             newUsersProjects.setHasContributed(true);
@@ -84,6 +85,7 @@ public class ProjectService {
             viewedProjectService.addViewedProject(newViewedProject);
             status = HttpStatus.CREATED;
 
+            // Fetching the project with the default configurations set above that need to be reflected in HTTP response body
             project = projectRepository.findById(project.getProjectId()).get();
             return new ResponseEntity<>(project, status);
         } else {
@@ -94,13 +96,17 @@ public class ProjectService {
 
     public ResponseEntity<Project> updateProjectById(long id, Project newProject) {
         HttpStatus status;
+        // Check if the project exists
         if (projectRepository.existsById(id)) {
             Project project = projectRepository.findById(id).get();
 
+            // Check if the updated title would conflict with existing titles
             if (!newProject.getProjectTitle().equals(project.getProjectTitle())) {
+                // If no conflict - update
                 if (!projectRepository.existsByProjectTitle(newProject.getProjectTitle())) {
                     String newProjectTitle = newProject.getProjectTitle();
                     project.setProjectTitle(newProjectTitle);
+                // Else - report conflict
                 } else {
                     status = HttpStatus.CONFLICT;
                     return new ResponseEntity<>(null, status);
@@ -140,6 +146,11 @@ public class ProjectService {
         }
     }
 
+    /*
+    *   Toggle function to change the status of a project whether it's active or inactive. The purpose of the endpoint
+    *   is in view of never actually deleting a project in order to be able to retain activity history for the
+    *   suggestion algorithm
+    */
     public ResponseEntity<Project> toggleIsActiveByProjectId(long id) {
         HttpStatus status;
         if (projectRepository.existsById(id)) {
@@ -157,6 +168,10 @@ public class ProjectService {
         }
     }
 
+    /*
+    *   The project is not actually deleted, but it's isActive status is set to `false` in order to be able to retain
+    *   activity history for the suggestion algorithm
+    */
     public ResponseEntity<Project> deleteProjectById(long id) {
         HttpStatus status;
         if (projectRepository.existsById(id)) {

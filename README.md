@@ -33,6 +33,7 @@ Some points of note:
 - adhering to REST API conventions (including layering and versioning)
 - optimizing business logic for performance
 - handling attempts of adding duplicate objects into the database, and it's relations
+- *firebase_config.json* file in *src/main/resources* contains sensitive information. However, there are restrictions set on HTTP referrers in the Firebase account. This is a workaround to make the application continuously deployable to Heroku. Ideally, the file would be added to *.gitignore* or handled through multiple environment variables
 
 ## Getting started
 ### Step 1

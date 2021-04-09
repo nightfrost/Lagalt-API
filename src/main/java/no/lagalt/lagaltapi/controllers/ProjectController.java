@@ -3,7 +3,6 @@ package no.lagalt.lagaltapi.controllers;
 import no.lagalt.lagaltapi.models.Announcement;
 import no.lagalt.lagaltapi.models.Project;
 import no.lagalt.lagaltapi.models.ProjectCard;
-import no.lagalt.lagaltapi.repositories.ProjectRepository;
 import no.lagalt.lagaltapi.services.AnnouncementsService;
 import no.lagalt.lagaltapi.services.ProjectCardsService;
 import no.lagalt.lagaltapi.services.ProjectService;
@@ -20,9 +19,6 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 public class ProjectController {
 
     @Autowired
-    private ProjectRepository projectRepository;
-
-    @Autowired
     private ProjectService projectService;
 
     @Autowired
@@ -37,7 +33,12 @@ public class ProjectController {
         return projectService.getProjectById(projectId);
     }
 
-    // get all active projects
+    /*
+    *   Get all active projects - an endpoint that has the implementation of search functionality for matches across
+    *   project title, type, description, required skills and tags. It also allows filtering by industry and project
+    *   status as well as limiting the amount of search results. In addition, it serves as an endpoint to fetch projects
+    *   for anonymous users
+    */
     @GetMapping("/projects")
     public ResponseEntity<Set<Project>> getAllActiveProjects(
             @RequestParam(required = false) String industry,
@@ -71,13 +72,17 @@ public class ProjectController {
         return projectService.updateProjectById(projectId, newProject);
     }
 
-    // reactivate project by project ID
+    /*
+    *   Reactivate project by project ID - an endpoint that implements a toggle function to change the status of a
+    *   project whether it's active or inactive. The purpose of the endpoint is in view of never actually deleting a
+    *   project in order to be able to retain activity history for the suggestion algorithm
+    */
     @PutMapping("/toggle-active-status/{projectId}")
     public ResponseEntity<Project> toggleIsActiveByProjectId(@PathVariable long projectId) {
         return projectService.toggleIsActiveByProjectId(projectId);
     }
 
-    // delete project by ID
+    // delete project by ID - the project is not actually deleted, but it's isActive status is set to `false`
     @DeleteMapping("/{id}")
     public ResponseEntity<Project> deleteProjectById(@PathVariable long id) {
         return projectService.deleteProjectById(id);

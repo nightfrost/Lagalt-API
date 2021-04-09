@@ -18,7 +18,7 @@ public class ViewedProjectsController {
     @Autowired
     private ViewedProjectService viewedProjectService;
 
-    // create viewed project
+    // create viewed project - an endpoint that records when a project has been viewed
     @PostMapping
     public ResponseEntity<ViewedProjects> addViewedProject(@RequestBody ViewedProjects newViewedProject) {
         return viewedProjectService.addViewedProject(newViewedProject);

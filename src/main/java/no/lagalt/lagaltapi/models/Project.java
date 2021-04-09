@@ -40,6 +40,10 @@ public class Project {
     @Column(name = "project_type")
     private ProjectType projectType;
 
+    /*
+    *   Hibernate does not support creating collections in database columns. Therefore, @ElementCollection and
+    *   @CollectionTable annotations are used to create a separate table to implement the collection
+    */
     @ElementCollection
     @CollectionTable(name="project_photos", joinColumns=@JoinColumn(name="project_id"))
     @Column(name = "project_photos")

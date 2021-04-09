@@ -12,7 +12,7 @@ import static no.lagalt.lagaltapi.controllers.ControllerHelper.BASE_URI_V1;
 @Entity
 public class ClickedProjects {
 
-    @EmbeddedId
+    @EmbeddedId     // the annotation is in the context of the UsersProjectsId composite key generator
     @Column(name = "users_projects_id")
     private UsersProjectsId id = new UsersProjectsId();
 

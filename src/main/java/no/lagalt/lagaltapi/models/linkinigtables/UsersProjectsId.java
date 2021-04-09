@@ -3,6 +3,11 @@ package no.lagalt.lagaltapi.models.linkinigtables;
 import java.io.Serializable;
 import java.util.Objects;
 
+/*
+*   UsersProjectsId class implements a composite key generator for the linking tables. It is a way to have additional
+*   columns in the linking tables, which is not supported with Hibernate Many-to-Many relation mapping
+*/
+
 public class UsersProjectsId implements Serializable {
 
     private static final long serialVersionUID = 1L;

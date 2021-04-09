@@ -20,6 +20,11 @@ public class SuggestionController {
     @Autowired
     private SuggestionService suggestionService;
 
+    /*
+    *   An endpoint that implements the new content algorithm that provides suggestions for logged-in users based on
+    *   projects that they have previously contributed to, clicked on or viewed. It also accounts for user's skills and
+    *   also suggests other active projects if there are no related ones to suggest.
+    */
     @GetMapping("/{userId}")
     public ResponseEntity<Set<Project>> getSuggestions(@PathVariable long userId) {
         return suggestionService.getSuggestions(userId);

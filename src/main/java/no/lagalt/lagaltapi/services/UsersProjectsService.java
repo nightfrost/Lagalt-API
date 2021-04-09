@@ -50,7 +50,7 @@ public class UsersProjectsService {
             ApprovalStatus newApprovalStatus = newUsersProjects.getApprovalStatus();
             usersProjects.setApprovalStatus(newApprovalStatus);
             if (newApprovalStatus == ApprovalStatus.APPROVED) {
-                usersProjects.setHasContributed(true);
+                usersProjects.setHasContributed(true);  // recording in order to be able to retain activity history for the suggestion algorithm if the user or project status is changed
             }
 
             String newMotivation = newUsersProjects.getMotivation();
