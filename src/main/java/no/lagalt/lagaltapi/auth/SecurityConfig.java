@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setAllowedHeaders(restSecProps.getAllowedHeaders());
         configuration.setAllowCredentials(restSecProps.isAllowCredentials());
         configuration.setExposedHeaders(restSecProps.getExposedHeaders());
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOrigin("https://lagaltno.herokuapp.com/");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
